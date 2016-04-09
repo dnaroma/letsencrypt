@@ -40,14 +40,14 @@ RUN echo '#!/bin/sh' > get_cert.sh \
     && echo ' openssl req -new -sha256 -key domain.key -subj "/CN=www.ilovelive.tk" > domain.csr' >> get_cert.sh \
     && echo ' cp *.key ${certdir}' >> get_cert.sh \
     && echo ' cp domain.csr ${certdir}' >> get_cert.sh \
+    && echo ' openssl dhparam -out server.dhparam 4096' >> get_cert.sh \
+    && echo ' cp server.dhparam ${certdir}' >> get_cert.sh \
     && echo "fi" >> get_cert.sh \
     && echo 'python /acme-tiny/acme_tiny.py --account-key ${certdir}/account.key --csr ${certdir}/domain.csr --acme-dir ${certdir} > ./signed.crt' >> get_cert.sh \
     && echo 'curl -o intermediate.pem https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem' >> get_cert.sh \
     && echo 'cat signed.crt intermediate.pem > chained.pem' >> get_cert.sh \
     && echo 'rm intermediate.pem' >> get_cert.sh \
     && echo 'cp chained.pem ${certdir}' >> get_cert.sh \
-    && echo 'openssl dhparam -out server.dhparam 4096' >> get_cert.sh \
-    && echo 'cp server.dhparam ${certdir}' >> get_cert.sh \
     && echo "echo 'successfully finished'" >> get_cert.sh \
     && chmod +x get_cert.sh
 
