@@ -27,8 +27,7 @@ RUN export BUILD_DEPS="git \
     && rm -rf /var/cache/apk/*
 
 # Set certificate, see https://github.com/diafygi/acme-tiny
-VOLUME /var/www/challenges/
-WORKDIR /var/www/challenges/
+WORKDIR /var/www/challenges
 # Create a Let's Encrypt account private key
 RUN openssl genrsa 4096 > account.key \
     && openssl genrsa 4096 > domain.key
@@ -41,5 +40,6 @@ RUN python /acme-tiny/acme_tiny.py --account-key ./account.key --csr ./domain.cs
 RUN curl -o intermediate.pem https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem
 RUN cat signed.crt intermediate.pem > chained.pem
 RUN openssl dhparam -out server.dhparam 4096
+VOLUME /var/www/challenges
 
 ENTRYPOINT ["cat","chained.pem"]
