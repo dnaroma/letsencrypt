@@ -37,4 +37,7 @@ RUN echo "openssl genrsa 4096 > account.key" > get_cert.sh \
 
 VOLUME /acme-tiny
 
+# install bash
+RUN apk-install bash
+
 ENTRYPOINT ["/bin/bash"]
