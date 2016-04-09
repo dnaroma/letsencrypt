@@ -14,7 +14,6 @@ RUN export BUILD_DEPS="git \
                 py-pip \
                 python-dev" \
     && apk add -U dialog \
-                bash \
                 python \
                 augeas-libs \
                 openssl \
@@ -28,7 +27,8 @@ RUN export BUILD_DEPS="git \
     && rm -rf /var/cache/apk/*
     
 # Set certificate, see https://github.com/diafygi/acme-tiny
-RUN echo "openssl genrsa 4096 > account.key" > get_cert.sh \
+RUN echo "#!/bin/sh" > get_cert.sh
+    && echo "openssl genrsa 4096 > account.key" >> get_cert.sh \
     && echo "openssl genrsa 4096 > domain.key" >> get_cert.sh \
     && echo 'openssl req -new -sha256 -key domain.key -subj "/CN=www.ilovelive.tk" > domain.csr' >> get_cert.sh \
     && echo "python /acme-tiny/acme_tiny.py --account-key ./account.key --csr ./domain.csr --acme-dir /var/www/challenges/ > ./signed.crt" >> get_cert.sh \
