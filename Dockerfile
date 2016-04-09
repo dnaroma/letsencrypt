@@ -27,6 +27,7 @@ RUN export BUILD_DEPS="git \
     && rm -rf /var/cache/apk/*
     
 # Set certificate, see https://github.com/diafygi/acme-tiny
+WORKDIR /var/www/challenges
 RUN echo "#!/bin/sh" > get_cert.sh
     && echo "openssl genrsa 4096 > account.key" >> get_cert.sh \
     && echo "openssl genrsa 4096 > domain.key" >> get_cert.sh \
