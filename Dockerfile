@@ -40,6 +40,6 @@ RUN python /acme-tiny/acme_tiny.py --account-key ./account.key --csr ./domain.cs
 #save intermediate cert and add to my cert
 RUN curl -o intermediate.pem https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem
 RUN cat signed.crt intermediate.pem > chained.pem
-RUN openssl dhparam -out dhparam.pem 4096
+RUN openssl dhparam -out server.dhparam 4096
 
 ENTRYPOINT ["cat","chained.pem"]
