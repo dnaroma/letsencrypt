@@ -38,4 +38,4 @@ RUN echo "#!/bin/sh" > get_cert.sh \
     && echo "openssl dhparam -out server.dhparam 4096" >> get_cert.sh \
     && chmod +x get_cert.sh
 
-ENTRYPOINT ["/acme-tiny/get_cert.sh"]
+ENTRYPOINT ["/var/www/challenges/get_cert.sh"]
