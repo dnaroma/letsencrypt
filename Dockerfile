@@ -14,6 +14,7 @@ RUN export BUILD_DEPS="git \
                 py-pip \
                 python-dev" \
     && apk add -U dialog \
+                bash \
                 python \
                 augeas-libs \
                 openssl \
@@ -36,8 +37,5 @@ RUN echo "openssl genrsa 4096 > account.key" > get_cert.sh \
     && echo "openssl dhparam -out server.dhparam 4096" >> get_cert.sh
 
 VOLUME /acme-tiny
-
-# install bash
-RUN apk add bash
 
 ENTRYPOINT ["/bin/bash"]
