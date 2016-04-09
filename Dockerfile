@@ -25,6 +25,17 @@ RUN export BUILD_DEPS="git \
     && /acme-tiny/venv/bin/pip install -r /acme-tiny/tests/requirements.txt \
     && apk del ${BUILD_DEPS} \
     && rm -rf /var/cache/apk/*
+    
+# Set certificate, see https://github.com/diafygi/acme-tiny
+RUN tee get_cert.sh << EOF \
+    openssl genrsa 4096 > account.key \
+    openssl genrsa 4096 > domain.key \
+    openssl req -new -sha256 -key domain.key -subj "/CN=www.ilovelive.tk" > domain.csr \
+    python /acme-tiny/acme_tiny.py --account-key ./account.key --csr ./domain.csr --acme-dir /var/www/challenges/ > ./signed.crt \
+    curl -o intermediate.pem https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem \
+    cat signed.crt intermediate.pem > chained.pem \
+    openssl dhparam -out server.dhparam 4096 \
+    EOF
 
 VOLUME /acme-tiny
 
