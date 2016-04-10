@@ -27,7 +27,7 @@ RUN export BUILD_DEPS="git \
     && apk del ${BUILD_DEPS} \
     && rm -rf /var/cache/apk/*
     
-ADD get_cert.sh
+ADD get_cert.sh /acme-tiny/
 RUN chmod +x get_cert.sh
 
 ENTRYPOINT ["/acme-tiny/get_cert.sh"]
