@@ -37,7 +37,7 @@ RUN echo '#!/bin/sh' > get_cert.sh \
     && echo " echo 'generate new key...'" >> get_cert.sh \
     && echo ' openssl genrsa 4096 > account.key' >> get_cert.sh \
     && echo ' openssl genrsa 4096 > domain.key' >> get_cert.sh \
-    && echo ' openssl req -new -sha256 -key domain.key -subj "/CN=www.ilovelive.tk" > domain.csr' >> get_cert.sh \
+    && echo " openssl req -new -sha256 -key domain.key -subj \"/CN=www.{DOMAIN_NAME}/CN={DOMAIN_NAME}\" > domain.csr" >> get_cert.sh \
     && echo ' cp *.key ${certdir}' >> get_cert.sh \
     && echo ' cp domain.csr ${certdir}' >> get_cert.sh \
     && echo ' openssl dhparam -out server.dhparam 4096' >> get_cert.sh \
