@@ -1,10 +1,10 @@
 #!/bin/sh
 certdir=/var/www/challenges
-if [-f "${certdir}/account.key"]
+if [ -f "${certdir}/account.key" ]
 then
- echo 'key already existed'
+ echo '\033[31mkey already existed\033[0m'
 else
- echo 'generate new key...'
+ echo '\033[32mgenerate new key...\033[0m'
  openssl genrsa 4096 > account.key
  openssl genrsa 4096 > domain.key
  openssl req -new -sha256 -key domain.key -subj "/CN=www.${DOMAIN_NAME}/CN=${DOMAIN_NAME}" > domain.csr
@@ -18,4 +18,4 @@ curl -o intermediate.pem https://letsencrypt.org/certs/lets-encrypt-x3-cross-sig
 cat signed.crt intermediate.pem > chained.pem
 rm intermediate.pem
 cp chained.pem ${certdir}
-echo 'successfully finished'
+echo '\033[32msuccessfully finished'
