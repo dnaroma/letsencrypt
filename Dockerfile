@@ -16,6 +16,7 @@ RUN export BUILD_DEPS="git \
     && apk add -U dialog \
                 python \
                 curl \
+                bash \
                 augeas-libs \
                 openssl \
                 ${BUILD_DEPS} \
